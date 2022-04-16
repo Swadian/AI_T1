@@ -87,7 +87,7 @@ class Graph: #graful problemei
         scop = True
         stive = nodCurent.info
         for i in range(len(stive)-1):
-            if len(stive[i])<len(stive[i+1]):
+            if len(stive[i]) and len(stive[i+1]) and not stive[i][0].isalpha() and not stive[i+1][0].isalpha() and len(stive[i])<len(stive[i+1]):
                 scop=False
         alpha=0
         for i in range(len(stive)):
@@ -186,15 +186,26 @@ class Graph: #graful problemei
             ##Calculez cate stive nu se incadreaza in conditia finala (nu sunt mai inalte decat stiva de la dreapta)
             h=0
             for i in range(len(infoNod)-1):
-                if len(infoNod[i])<len(infoNod[i+1]):
+                if len(infoNod[i]) and len(infoNod[i+1]) and not infoNod[i][0].isalpha() and not infoNod[i+1][0].isalpha() and len(infoNod[i])<len(infoNod[i+1]):
                     h=h+1
             return h
         elif tip_euristica=="euristica admisibila 2":
             #calculez cat de mari sunt diferentele dintre stive 
             h=0
             for i in range(len(infoNod)-1):
-                if len(infoNod[i])<len(infoNod[i+1]):
+                if len(infoNod[i]) and len(infoNod[i+1]) and not infoNod[i][0].isalpha() and not infoNod[i+1][0].isalpha() and len(infoNod[i])<len(infoNod[i+1]):
                     h=h+(len(infoNod[i+1])-len(infoNod[i]))
+            alpha=0
+            for i in range(len(infoNod)):
+                for j in range(len(infoNod[i])):
+                    if infoNod[i][j].isalpha():
+                        alpha+=1
+            for i in range(len(infoNod)):
+                if len(infoNod[i]) and infoNod[i][0].isalpha():
+                    alpha-=len(infoNod[i])
+                    break
+            h+=alpha
+             #adun cate litere nu-s in stiva de litere (foarte inexact, dar rezultatul e mai mic decat cel real mereu)
             return h
         else: #tip_euristica=="euristica neadmisibila"
             h=len(infoNod)
